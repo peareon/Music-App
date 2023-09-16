@@ -21,24 +21,34 @@ export async function APICall(artist: String, minValue: Number, maxValue: Number
     return(["1"]);
     }
     else{
-    const limit = Math.floor(Math.random() * 26) + 10;
-    const tracksResponse = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&seed_artists=${id}&min_popularity=${minValue}&max_popularity=${maxValue}`,{
-        headers: {
-            "Authorization": `Bearer ${access_token}`
+        const limit = Math.floor(Math.random() * 26) + 10;
+        const tracksResponse = await fetch(`https://api.spotify.com/v1/recommendations?limit=${limit}&seed_artists=${id}&min_popularity=${minValue}&max_popularity=${maxValue}`,{
+            headers: {
+                "Authorization": `Bearer ${access_token}`
+            }
+        });
+        const {tracks} = await tracksResponse.json();
+        const no_of_tracks = tracks.length;
+        console.log(no_of_tracks)
+        let tracksList = [];
+        let rnd_list:any = [];
+        if(no_of_tracks > 6){
+            for(let i = 0; i < 6; i++){
+                let random_take = Math.floor(Math.random() * no_of_tracks);
+                while(rnd_list.includes(random_take)){
+                    random_take = Math.floor(Math.random() * no_of_tracks);
+                }
+                rnd_list.push(random_take);
+                tracksList.push(tracks[random_take]);
+            }
+            return(JSON.stringify(tracksList));    
         }
-    });
-    const {tracks} = await tracksResponse.json();
-    const no_of_tracks = tracks.length;
-    let tracksList = [];
-    let rnd_list:any = [];
-    for(let i = 0; i < 6; i++){
-        let random_take = Math.floor(Math.random() * no_of_tracks);
-        while(rnd_list.includes(random_take)){
-            random_take = Math.floor(Math.random() * no_of_tracks);
+        else{
+            for(let i = 0; i < no_of_tracks; i++){
+                tracksList.push(tracks[i]);
+            }
+            return(JSON.stringify(tracksList));  
         }
-        rnd_list.push(random_take);
-        tracksList.push(tracks[random_take]);
-    }
-    return(JSON.stringify(tracksList));         
+         
     }
 }
