@@ -4,6 +4,7 @@ import { useState } from "react";
 import Form from "@/components/Form.jsx";
 import Slider from "@/components/Slider.jsx";
 import Artist from "@/components/Artist.jsx";
+import Image from 'next/image';
 
 export const ApiContext = React.createContext({});
 
@@ -17,7 +18,7 @@ export default function Home() {
     
     apiResponse.length == 0 ?
     <>
-      <img  className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
+      <Image  className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
       <div className='flex flex-col items-center self-center'>
         <ApiContext.Provider value={{setApiResponse, minValue, maxValue, setMinValue, setMaxValue}}>
           <Form />
@@ -30,7 +31,7 @@ export default function Home() {
       <div>Artist name not found. You're too underground</div>
     </>:
     <>
-      <img className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
+      <Image className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
       <div className='flex flex-col items-center self-center'>
       <ApiContext.Provider value={{setApiResponse, minValue, maxValue, setMinValue, setMaxValue}}>
         <Form />

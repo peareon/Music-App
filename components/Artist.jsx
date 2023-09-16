@@ -1,3 +1,4 @@
+import Image from 'next/image'
 export default function Artist(props){
     return(
         <>
@@ -8,7 +9,7 @@ export default function Artist(props){
                     {props.preview_url ? <video className="max-w-[200px] mt-[-45px]" controls>
                         <source src={props.preview_url} type="video/mp4"/>
                     </video>: <div className="min-h-[15px] min-w-[200px]"></div>}
-                    <img className="max-w-[200px] absolute" src={props.imagen} alt="" />
+                    <Image className="max-w-[200px] absolute" src={props.imagen} alt="" />
                 </div>
             </div>
         </>
