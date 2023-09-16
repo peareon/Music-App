@@ -28,7 +28,7 @@ export default function Home() {
     </>: apiResponse.length == 1 ?
     <>
       <Form />
-      <div>Artist name not found. You're too underground</div>
+      <div>Artist name not found. You are too underground</div>
     </>:
     <>
       <Image className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
