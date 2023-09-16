@@ -18,7 +18,7 @@ export default function Home() {
     
     apiResponse.length == 0 ?
     <>
-      <Image  className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
+      <Image width={100} height={100} className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
       <div className='flex flex-col items-center self-center'>
         <ApiContext.Provider value={{setApiResponse, minValue, maxValue, setMinValue, setMaxValue}}>
           <Form />
@@ -31,7 +31,7 @@ export default function Home() {
       <div>Artist name not found. You are too underground</div>
     </>:
     <>
-      <Image className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
+      <Image width={100} height={100} className='m-auto mt-10 scale-125' src="/spotify-100.svg" alt="Logo" />
       <div className='flex flex-col items-center self-center'>
       <ApiContext.Provider value={{setApiResponse, minValue, maxValue, setMinValue, setMaxValue}}>
         <Form />

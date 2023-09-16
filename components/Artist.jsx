@@ -9,7 +9,7 @@ export default function Artist(props){
                     {props.preview_url ? <video className="max-w-[200px] mt-[-45px]" controls>
                         <source src={props.preview_url} type="video/mp4"/>
                     </video>: <div className="min-h-[15px] min-w-[200px]"></div>}
-                    <Image className="max-w-[200px] absolute" src={props.imagen} alt="" />
+                    <Image width={200} height={100} className="max-w-[200px] absolute" src={props.imagen} alt="" />
                 </div>
             </div>
         </>

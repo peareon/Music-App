@@ -8,7 +8,10 @@ const nextConfig = {
     webpack(config) {
         config.plugins.push(new webpack.EnvironmentPlugin(myEnv))
         return config
-    }
+    },
+    images: {
+        domains: ['i.scdn.co', 'learnbestcoding.com'],
+      },
 }
 
 module.exports = nextConfig
