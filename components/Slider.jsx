@@ -9,29 +9,27 @@ export default function Slider(){
 
     function fromSlider(event) {
         let value = event.target.value;
-        console.log(typeof value,typeof minValue, typeof maxValue)
         if(value < maxValue){
             setMinValue(Number(event.target.value));
             setMinValueInput(Number(event.target.value))
         }
         else{
-            setMinValue(maxValue);
-            setMinValueInput(maxValue);
+            setMinValue(maxValue-5);
+            setMinValueInput(maxValue-5);
             
         }}
     function toSlider(event) {
-    if (event.target.value <= minValue){
-        setMaxValue(minValue);
-        setMaxValueInput(minValue);
-        return
-    }
-    else{
-        setMaxValue(Number(event.target.value));
-        setMaxValueInput(Number(event.target.value));
-    }}
+        if (event.target.value <= minValue){
+            setMaxValue(minValue+5);
+            setMaxValueInput(minValue+5);
+        }
+        else{
+            setMaxValue(Number(event.target.value));
+            setMaxValueInput(Number(event.target.value));
+        }}
 
     function fromInput(event){
-        if(event.target.value <= maxValue){
+        if(event.target.value < maxValue){
             if(event.target.value <= 0){
                 setMinValue(0);
                 setMinValueInput(0);
@@ -42,13 +40,13 @@ export default function Slider(){
             } 
         }
         else{
-            setMinValue(maxValue);
-            setMinValueInput(maxValue);
+            setMinValue(maxValue-5);
+            setMinValueInput(maxValue-5);
         }
     }
     function toInput(event){
         if(event.target.value <= minValue){
-            setMaxValue(minValue+2);
+            setMaxValue(minValue+5);
             setMaxValueInput(Number(event.target.value));
         }
         else{

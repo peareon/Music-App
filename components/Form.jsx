@@ -4,12 +4,18 @@ import { APICall } from "@/utils";
 
 export default function Form(){
     const [artist, setArtist] = useState('')
-    const {setApiResponse, minValue, maxValue} = useContext(ApiContext);
+    const {setApiResponse, setQuery, minValue, maxValue} = useContext(ApiContext);
 
     async function getArtist(ev){
         ev.preventDefault();
         const response = await APICall(artist, minValue, maxValue);
-        setApiResponse(JSON.parse(response));
+        setQuery(true);
+        try{
+            setApiResponse(JSON.parse(response));
+        }
+        catch{
+            setApiResponse(response);
+        }
     }
     return(
         <main className="flex min-h-[140px] flex-col items-center justify-between mt-[70px]">

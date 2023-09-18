@@ -8,7 +8,6 @@ export async function APICall(artist: String, minValue: Number, maxValue: Number
     body: `grant_type=client_credentials&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
     });
     const {access_token} = await token.json();
-    console.log(access_token)
     const artistResponse = await fetch(`https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=1`,{
     headers: {
         "Authorization": `Bearer ${access_token}`
@@ -18,7 +17,7 @@ export async function APICall(artist: String, minValue: Number, maxValue: Number
     const {artists: {items}} = await artistResponse.json();
     const {id} = items[0];
     if (id == ""){
-    return(["1"]);
+    return(["No artist found"]);
     }
     else{
         const limit = Math.floor(Math.random() * 26) + 10;
@@ -29,9 +28,11 @@ export async function APICall(artist: String, minValue: Number, maxValue: Number
         });
         const {tracks} = await tracksResponse.json();
         const no_of_tracks = tracks.length;
-        console.log(no_of_tracks)
         let tracksList = [];
         let rnd_list:any = [];
+        if(no_of_tracks === 0){
+            return(["No tracks found"]);
+        }
         if(no_of_tracks > 6){
             for(let i = 0; i < 6; i++){
                 let random_take = Math.floor(Math.random() * no_of_tracks);
