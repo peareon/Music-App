@@ -1,34 +1,55 @@
-export async function APICall(artist: String, minValue: Number, maxValue: Number) {
+import axios from 'axios';
 
-    const token = await fetch('https://accounts.spotify.com/api/token', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `grant_type=client_credentials&client_id=${process.env.REACT_APP_CLIENT_ID}&client_secret=${process.env.REACT_APP_CLIENT_SECRET}`
-    });
-    const {access_token} = await token.json();
-    const artistResponse = await fetch(`https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=1`,{
-    headers: {
-        "Authorization": `Bearer ${access_token}`
+export async function APICall(artist: String, minValue: Number, maxValue: Number) {
+    const URI = 'https://accounts.spotify.com/api/token';
+    const params = new URLSearchParams();
+    params.append('grant_type', 'client_credentials');
+    params.append('client_id', process.env.REACT_APP_CLIENT_ID);
+    params.append('client_secret', process.env.REACT_APP_CLIENT_SECRET);
+    let access_token = '';
+    let artistResponse = '';
+    let toptracksResponse = '';
+    try{
+        const token = await axios.post(URI, params,
+        {headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }});
+        access_token = token.data.access_token;
     }
-    });
-    const {artists: {items}} = await artistResponse.json();
-    const {id} = items[0];
+    catch(error){
+        console.log(error);
+    }
+    
+    try{
+        artistResponse = await axios.get(`https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=1`,{
+        headers: {
+        "Authorization": `Bearer ${access_token}`
+        }
+        });
+    }catch(error){
+        console.log(error);
+    }
+
+    const items = artistResponse.data.artists.items;
+    const id = items[0].id;
     if (id == ""){
     return(["No artist or genres found"]);
     }
     else{
         const limit = Math.floor(Math.random() * 26) + 10;
         
-        const getSeeds = await fetch(`https://api.spotify.com/v1/artists/${id}/top-tracks`, {
+        try{
+            toptracksResponse = await axios.get(`https://api.spotify.com/v1/artists/${id}/top-tracks`, {
             headers: {
                 "Authorization": `Bearer ${access_token}`
             }
         })
+        }
+        catch(error){
+            console.log(error);
+        }
 
-        const toptracksResponse = await getSeeds.json();
-        const topTracks = toptracksResponse.tracks;
+        const topTracks = toptracksResponse.data.tracks;
         console.log(topTracks)
         if(topTracks.length > 5){
             let songsArray: string[] = [];
